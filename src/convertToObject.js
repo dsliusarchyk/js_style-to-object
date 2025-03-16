@@ -6,24 +6,22 @@
  * @return {object}
  */
 function convertToObject(sourceString) {
-  const stylesObject = {};
-
-  sourceString
+  return sourceString
     .split(';')
     .map((line) => line.trim())
     .filter((line) => line.length > 0)
-    .forEach((line) => {
+    .reduce((acc, line) => {
       const colonIndex = line.indexOf(':');
       if (colonIndex === -1) {
-        return;
+        return acc;
       }
 
       const key = line.slice(0, colonIndex).trim();
       const value = line.slice(colonIndex + 1).trim();
-      stylesObject[key] = value;
-    });
+      acc[key] = value;
 
-  return stylesObject;
+      return acc;
+    }, {});
 }
 
 module.exports = convertToObject;
